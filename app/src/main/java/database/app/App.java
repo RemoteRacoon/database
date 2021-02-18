@@ -3,8 +3,26 @@
  */
 package database.app;
 
+import allocation.DefaultAllocatorC;
+import allocation.DefaultAllocatorNW;
+import entities.User;
+
+import java.util.*;
+
 public class App {
     public static void main(String[] args) {
+        Timer t = new Timer();
+        DefaultAllocatorC accountsAllocator = new DefaultAllocatorC();
+        DefaultAllocatorNW clientsAllocator = new DefaultAllocatorNW();
 
+        /**
+         * Каждые 30 минут распределяем нагрузку по кредитам
+         */
+        t.scheduleAtFixedRate(accountsAllocator, 0, 30 * 1000 * 60);
+
+        /**
+         * Каждые 15 минут распределяем нагрузку по клиентам
+         */
+        t.scheduleAtFixedRate(clientsAllocator, 0, 15 * 1000 * 60);
     }
 }
